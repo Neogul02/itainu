@@ -1,41 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { useEffect, useState } from 'react';
-import * as Font from 'expo-font';
-
-import { Styles } from './styles';
-
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import FirstScreen from './components/FirstScreen';
-import LoginScreen from './components/LoginScreen';
+import LoginWithGoogle from './components/LoginWithGoogle';
+import MainScreen from './components/MainScreen'; // 메인 화면 컴포넌트
+import PetRegistrationScreen from './components/PetRegistrationScreen'; // 반려동물 등록 화면 컴포넌트
+
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [isFont, setIsFont] = useState(false);
-
-  useEffect(async () => {
-    await Font.loadAsync({
-      pretendard: require('./assets/fonts/Pretendard-Medium.ttf'),
-    });
-    setIsFont(true);
-  }, []);
-
-  const [showFirstPage, setShowFirstPage] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowFirstPage(false);
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (showFirstPage) {
-    return <FirstScreen />;
-  }
-
   return (
-    <View style={Styles.container}>
-      <LoginScreen />
-      {/* <Text style={Styles.pretendardFont}>메인화면 입니다</Text> */}
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="FirstScreen">
+        <Stack.Screen
+          name="FirstScreen"
+          component={FirstScreen}
+          options={{ headerShown: false }} // 헤더를 숨깁니다.
+        />
+        <Stack.Screen
+          name="LoginWithGoogle"
+          component={LoginWithGoogle}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MainScreen"
+          component={MainScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PetRegistrationScreen"
+          component={PetRegistrationScreen}
+          options={{ headerShown: false }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
