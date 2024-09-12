@@ -9,11 +9,12 @@ export default function FirstScreen() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('LoginWithGoogle');  // 3초 후 구글 로그인 화면으로 이동
+      navigation.replace('LoginWithGoogle'); // 3초 후 구글 로그인 화면으로 이동
     }, 3000);
 
-    return () => clearTimeout(timer);  // 컴포넌트가 언마운트될 때 타이머를 클리어
+    return () => clearTimeout(timer); // 컴포넌트가 언마운트될 때 타이머를 클리어
   }, [navigation]);
+ 
 
   return (
     <View style={Styles.container}>
